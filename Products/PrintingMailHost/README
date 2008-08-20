@@ -26,6 +26,6 @@ Author
 Contributors
 ------------
 
-  Dorneles Treméa <deo@plonesolutions.com>
+  Dorneles Tremea <deo@plonesolutions.com>
   -- Fixed to work both with old-style and new-style classes. Extended
      to also patch SecureMailBase from SecureMailHost, if available.
