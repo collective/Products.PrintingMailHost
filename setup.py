@@ -3,11 +3,27 @@ import os
 
 version = '0.2'
 
+def read(*rnames):
+    return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
+
+# line breaks are needed after each block so that reST doesn't get mad 
+long_description = """
+%s
+
+%s
+
+%s
+
+Download
+========
+""" % (read("Products", "PrintingMailHost", "README"), 
+       read('docs', 'INSTALL.txt'),
+       read('docs', 'HISTORY.txt'))
+
 setup(name='Products.PrintingMailHost',
       version=version,
       description="A monkey patch to send MailHost messages to standard out",
-      long_description=open(os.path.join("Products", "PrintingMailHost", "README")).read() + "\n" +
-                       open(os.path.join("docs", "HISTORY.txt")).read(),
+      long_description=long_description,
       # Get more strings from http://www.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
         "Framework :: Plone",

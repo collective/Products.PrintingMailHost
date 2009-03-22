@@ -1,10 +1,7 @@
 import logging
+from base64 import decodestring
+import email.Parser
 from AccessControl import ClassSecurityInfo
-from Acquisition import aq_base
-from DateTime import DateTime
-from Acquisition import aq_inner, aq_parent, aq_base, aq_chain
-from Products.Archetypes.utils import shasattr
-from Products.CMFCore.utils import getToolByName
 from Products.MailHost.MailHost import MailBase
 
 try:
@@ -49,13 +46,24 @@ class PrintingMailHost:
     security.declarePrivate( '_send' )
     def _send(self, mfrom, mto, messageText, debug=False):
         """Send the message."""
+        if isinstance(messageText, str):
+            messageText = email.Parser.Parser().parsestr(messageText)
+        base64_note = ""
         print
         print " ---- sending mail ---- "
         print "From:", mfrom
         print "To:", mto
+        if messageText.get('Content-Transfer-Encoding') == 'base64':
+            base64_note = "NOTE: The email payload was originally base64 " \
+                          "encoded.  It was decoded for debug purposes."
+            orig_text = messageText.get_payload()
+            messageText.set_payload(decodestring(orig_text))
         print messageText
         print " ---- done ---- "
         print
+        if base64_note:
+            print base64_note
+            print
 
 
 LOG.warn('\n\n******************************************************************************\n\n'

@@ -1,8 +1,41 @@
 Changelog
 =========
 
-0.2
+0.3 (2009-03-22)
+----------------
+
+- Decode base64 encoded email messages
+  [claytron]
+
+- Added environment variable (ENABLE_PRINTING_MAILHOST) to enable
+  or disable PrintingMailHost
+  [claytron]
+
+- Update README and HISTORY.txt
+  [claytron]
+
+0.2 (2008-08-20)
+----------------
+
+- Release as an egg to PyPi
+  [claytron]
+
+0.1
 ---
 
-* Initial release
+- Updated to use the new standard log mechanism: logging.getLogger.
+  Reformated messages/docstrings.
+  [dtremea] (2006-03-17)
 
+- Extended to also patch SecureMailBase from SecureMailHost, if
+  available.
+  [dtremea] (2005-10-23)
+
+- Fixed to work both with old-style and new-style classes, as in
+  the later, dict is a 'dictproxy' instance, which doesn't have the
+  setitem method. Bumpped version. Noted changes. And clean up
+  whitespaces, of course... ;-)
+  [dtremea] (2005-10-23)
+
+- Initial creation/release
+  [optilude] (2005-04-05)

@@ -17,15 +17,21 @@ If Zope is not running in debug mode, it will not install itself. However,
 I wouldn't recommend putting it on a production site. You never know what
 those monkeys may get up to...
 
+You can optionally enable the PrintingMailHost with an environment variable
+as of version 0.3.  See the installation instructions for more information
+about how to use it.
+
 Author
 ------
 
-  Martin Aspeli <optilude@gmx.net>
-  -- Initial idea, release management
+Martin Aspeli <optilude (AT) gmx (DOT) net>
+    Initial idea, release management
 
 Contributors
 ------------
 
-  Dorneles Tremea <deo@plonesolutions.com>
-  -- Fixed to work both with old-style and new-style classes. Extended
-     to also patch SecureMailBase from SecureMailHost, if available.
+Dorneles Tremea <deo (AT) plonesolutions (DOT) com>
+    Fixed to work both with old-style and new-style classes. Extended
+    to also patch SecureMailBase from SecureMailHost, if available.
+
+Clayton Parker <clayton (AT) sixfeetup (DOT) com>
