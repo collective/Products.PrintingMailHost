@@ -1,6 +1,8 @@
 import logging
-from base64 import decodestring
 import email.Parser
+from email.message import Message
+from base64 import decodestring
+
 from AccessControl import ClassSecurityInfo
 from Products.MailHost.MailHost import MailBase
 
@@ -56,8 +58,18 @@ class PrintingMailHost:
         if messageText.get('Content-Transfer-Encoding') == 'base64':
             base64_note = "NOTE: The email payload was originally base64 " \
                           "encoded.  It was decoded for debug purposes."
-            orig_text = messageText.get_payload()
-            messageText.set_payload(decodestring(orig_text))
+            body = messageText.get_payload()
+            if isinstance(body, list):
+                for attachment in body:
+                    if isinstance(attachment, Message):
+                        messageText.set_payload(decodestring(attachment.get_payload()))
+                        break
+                    elif isinstance(attachment, str):
+                        messageText.set_payload(decodestring(attachment))
+                        break
+            else:
+                messageText.set_payload(decodestring(body))
+
         print messageText
         print " ---- done ---- "
         print
