@@ -1,6 +1,9 @@
 import logging
 import email.Parser
-from email.message import Message
+try:
+    from email.message import Message
+except ImportError:
+    from email import Message
 from base64 import decodestring
 
 from AccessControl import ClassSecurityInfo
