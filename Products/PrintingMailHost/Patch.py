@@ -9,12 +9,6 @@ from base64 import decodestring
 from AccessControl import ClassSecurityInfo
 from Products.MailHost.MailHost import MailBase
 
-try:
-    from Products.SecureMailHost.SecureMailHost import SecureMailBase
-    HAS_SMH = True
-except ImportError:
-    HAS_SMH = False
-
 LOG = logging.getLogger('PrintingMailHost')
 PATCH_PREFIX = '_monkey_'
 
@@ -100,5 +94,11 @@ directory to turn this off.
 """)
 
 monkeyPatch(MailBase, PrintingMailHost)
-if HAS_SMH:
+
+# Patch some other mail host implementations.
+try:
+    from Products.SecureMailHost.SecureMailHost import SecureMailBase
+except ImportError:
+    pass
+else:
     monkeyPatch(SecureMailBase, PrintingMailHost)
