@@ -102,3 +102,18 @@ except ImportError:
     pass
 else:
     monkeyPatch(SecureMailBase, PrintingMailHost)
+
+try:
+    from Products.MaildropHost.MaildropHost import MaildropHost
+except ImportError:
+    pass
+else:
+    monkeyPatch(MaildropHost, PrintingMailHost)
+
+try:
+    from Products.SecureMaildropHost.SecureMaildropHost import \
+        SecureMaildropHost
+except ImportError:
+    pass
+else:
+    monkeyPatch(SecureMaildropHost, PrintingMailHost)

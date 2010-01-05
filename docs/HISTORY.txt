@@ -4,7 +4,8 @@ Changelog
 0.7 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Also patch (Secure)MaildropHost when available.
+  [maurits]
 
 
 0.6 (2010-01-05)
