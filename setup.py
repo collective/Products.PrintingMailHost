@@ -6,7 +6,7 @@ version = '0.6dev'
 def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
-# line breaks are needed after each block so that reST doesn't get mad 
+# line breaks are needed after each block so that reST doesn't get mad
 long_description = """
 %s
 
@@ -16,7 +16,7 @@ long_description = """
 
 Download
 ========
-""" % (read("Products", "PrintingMailHost", "README"), 
+""" % (read("Products", "PrintingMailHost", "README"),
        read('docs', 'INSTALL.txt'),
        read('docs', 'HISTORY.txt'))
 
