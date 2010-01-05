@@ -20,11 +20,13 @@ PATCH_PREFIX = '_monkey_'
 
 __refresh_module__ = 0
 
+
 def monkeyPatch(originalClass, patchingClass):
     """Monkey patch original class with attributes from new class
        (Swiped from SpeedPack -- thanks, Christian Heimes!)
 
-    * Takes all attributes and methods except __doc__ and __module__ from patching class
+    * Takes all attributes and methods except __doc__ and __module__
+      from patching class
     * Safes original attributes as _monkey_name
     * Overwrites/adds these attributes in original class
     """
@@ -48,7 +50,7 @@ class PrintingMailHost:
     """MailHost which prints to output."""
     security = ClassSecurityInfo()
 
-    security.declarePrivate( '_send' )
+    security.declarePrivate('_send')
     def _send(self, mfrom, mto, messageText, debug=False, immediate=False):
         """Send the message."""
         if isinstance(messageText, str):
@@ -65,7 +67,8 @@ class PrintingMailHost:
             if isinstance(body, list):
                 for attachment in body:
                     if isinstance(attachment, Message):
-                        messageText.set_payload(decodestring(attachment.get_payload()))
+                        messageText.set_payload(
+                            decodestring(attachment.get_payload()))
                         break
                     elif isinstance(attachment, str):
                         messageText.set_payload(decodestring(attachment))
@@ -81,13 +84,20 @@ class PrintingMailHost:
             print
 
 
-LOG.warn('\n\n******************************************************************************\n\n'
-         'Monkey patching MailHosts to print emails to the terminal instead of sending them.\n'
-         '\n'
-         'NO MAIL WILL BE SENT FROM ZOPE AT ALL!\n'
-         '\n'
-         'Turn off debug mode or remove PrintingMailHost from the Products directory to turn this off.\n'
-         '\n******************************************************************************\n')
+LOG.warn("""
+
+******************************************************************************
+
+Monkey patching MailHosts to print emails to the terminal instead of
+sending them.
+
+NO MAIL WILL BE SENT FROM ZOPE AT ALL!
+
+Turn off debug mode or remove PrintingMailHost from the Products
+directory to turn this off.
+
+******************************************************************************
+""")
 
 monkeyPatch(MailBase, PrintingMailHost)
 if HAS_SMH:

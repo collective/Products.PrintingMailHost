@@ -3,6 +3,7 @@ import os
 
 version = '0.6dev'
 
+
 def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
@@ -24,7 +25,6 @@ setup(name='Products.PrintingMailHost',
       version=version,
       description="A monkey patch to send MailHost messages to standard out",
       long_description=long_description,
-      # Get more strings from http://www.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
         "Framework :: Plone",
         "Programming Language :: Python",
