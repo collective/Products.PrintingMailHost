@@ -49,7 +49,7 @@ class PrintingMailHost:
     security = ClassSecurityInfo()
 
     security.declarePrivate( '_send' )
-    def _send(self, mfrom, mto, messageText, debug=False):
+    def _send(self, mfrom, mto, messageText, debug=False, immediate=False):
         """Send the message."""
         if isinstance(messageText, str):
             messageText = email.Parser.Parser().parsestr(messageText)
