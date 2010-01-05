@@ -14,17 +14,20 @@ Changelog
 - Allow passing keyword 'immediate'.  Needed for Plone 4 compatibility.
   [maurits]
 
+
 0.5 (2009-08-07)
 ----------------
 
 - Fix email Message import
   [claytron]
 
+
 0.4 (2009-07-24)
 ----------------
 
 - Rough support for multipart email messages
   [iElectric]
+
 
 0.3 (2009-03-22)
 ----------------
@@ -39,11 +42,13 @@ Changelog
 - Update README and HISTORY.txt
   [claytron]
 
+
 0.2 (2008-08-20)
 ----------------
 
 - Release as an egg to PyPi
   [claytron]
+
 
 0.1
 ---
