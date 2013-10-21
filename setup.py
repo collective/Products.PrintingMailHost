@@ -17,7 +17,7 @@ long_description = """
 
 Download
 ========
-""" % (read("Products", "PrintingMailHost", "README"),
+""" % (read("README.rst"),
        read('docs', 'INSTALL.txt'),
        read('docs', 'HISTORY.txt'))
 
