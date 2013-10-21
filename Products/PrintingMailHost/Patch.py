@@ -1,4 +1,3 @@
-import logging
 import email.Parser
 try:
     from email.message import Message
@@ -7,9 +6,10 @@ except ImportError:
 from base64 import decodestring
 
 from AccessControl import ClassSecurityInfo
+from Products.PrintingMailHost import LOG
 from Products.MailHost.MailHost import MailBase
+from StringIO import StringIO
 
-LOG = logging.getLogger('PrintingMailHost')
 PATCH_PREFIX = '_monkey_'
 
 __refresh_module__ = 0
@@ -50,10 +50,11 @@ class PrintingMailHost:
         if isinstance(messageText, str):
             messageText = email.Parser.Parser().parsestr(messageText)
         base64_note = ""
-        print
-        print " ---- sending mail ---- "
-        print "From:", mfrom
-        print "To:", mto
+        out = StringIO()
+        print >> out, ""
+        print >> out, " ---- sending mail ---- "
+        print >> out, "From:", mfrom
+        print >> out, "To:", mto
         if messageText.get('Content-Transfer-Encoding') == 'base64':
             base64_note = "NOTE: The email payload was originally base64 " \
                           "encoded.  It was decoded for debug purposes."
@@ -70,12 +71,13 @@ class PrintingMailHost:
             else:
                 messageText.set_payload(decodestring(body))
 
-        print messageText
-        print " ---- done ---- "
-        print
+        print >> out, messageText
+        print >> out, " ---- done ---- "
+        print >> out, ""
         if base64_note:
-            print base64_note
-            print
+            print >> out, base64_note
+            print >> out, ""
+        LOG.info(out.getvalue())
 
 
 LOG.warn("""
