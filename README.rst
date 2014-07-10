@@ -7,7 +7,7 @@ This product, when installed, will check if Zope is running in debug mode,
 and if so, monkey patch (that is, grab the internals of, squeeze tight, then
 rip hard, just like monkeys do) Zope's MailHost class, meaning that *any and
 all* uses of a MailHost will be "fixed" so that instead of sending mail, it
-prints messages to the standard output.
+prints messages to the zope event log.
 
 This is useful if you don't have a local mailhost for testing, or if you
 prefer not to spam the crap out of yourself whilst finding out if your bulk

@@ -4,8 +4,10 @@ Changelog
 0.8 (unreleased)
 ----------------
 
-- Nothing changed yet.
-
+- Since we can enable PMH via an environment variable and thus when not
+  running in debug mode / foreground, emails are no longer printed, but
+  written to the zope event log.
+  [pysailor]
 
 0.7 (2010-01-05)
 ----------------
