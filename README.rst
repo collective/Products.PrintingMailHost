@@ -1,5 +1,5 @@
-PrintingMailHost
-================
+Products.PrintingMailHost
+=========================
 
 This is a hack. :)
 
@@ -21,11 +21,13 @@ You can optionally enable the PrintingMailHost with an environment variable
 as of version 0.3.  See the installation instructions for more information
 about how to use it.
 
+
 Author
 ------
 
 Martin Aspeli <optilude (AT) gmx (DOT) net>
     Initial idea, release management
+
 
 Contributors
 ------------
@@ -42,20 +44,12 @@ Maurits van Rees <maurits (AT) vanrees (DOT) org>
 Products.PrintingMailHost Installation
 ======================================
 
-To install Products.PrintingMailHost into the global Python environment (or a workingenv),
-using a traditional Zope 2 instance, you can do this:
-
-- When you're reading this you have probably already run 
-  ``easy_install Products.PrintingMailHost``. Find out how to install setuptools
-  (and EasyInstall) here:
-  http://peak.telecommunity.com/DevCenter/EasyInstall
-
-Alternatively, if you are using zc.buildout and the plone.recipe.zope2instance
-recipe to manage your project, you can do this:
+To install Products.PrintingMailHost into your Plone instance in
+buildout, you can do this:
 
 - Add ``Products.PrintingMailHost`` to the list of eggs to install, e.g.::
 
-    [buildout]
+    [instance]
     ...
     eggs =
         ...
