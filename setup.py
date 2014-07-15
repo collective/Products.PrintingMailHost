@@ -1,27 +1,12 @@
 from setuptools import setup, find_packages
-import os
 
 version = '0.8dev'
-
-
-def read(*rnames):
-    return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
-
-# line breaks are needed after each block so that reST doesn't get mad
-long_description = """
-%s
-
-%s
-
-Download
-========
-""" % (read("README.rst"),
-       read('CHANGES.rst'))
 
 setup(name='Products.PrintingMailHost',
       version=version,
       description="A monkey patch to send MailHost messages to standard out",
-      long_description=long_description,
+      long_description=(open("README.rst").read() + '\n\n' +
+                        open('CHANGES.rst').read()),
       classifiers=[
         "Framework :: Plone",
         "Programming Language :: Python",
