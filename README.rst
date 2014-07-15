@@ -71,6 +71,23 @@ buildout, you can do this:
         ...
         ENABLE_PRINTING_MAILHOST False
 
+- If PrintingMailHost is enabled, and you *additionally* want to send
+  each email to a fixed address, you can add another environment
+  variable::
+
+    [instance]
+    ...
+    environment-vars =
+        ...
+        PRINTING_MAILHOST_FIXED_ADDRESS admin@example.org
+
+  For clarity: this first prints the email, with the original
+  recipient address, and then sends an actual email with the same
+  contents to the fixed address you have specified.  The original
+  recipient is visible in the ``To:`` field.  It is similar to
+  receiving a blind carbon copy (bcc) of an email, except that the
+  original recipient never gets the email.
+
 - Re-run buildout in order to make any of the above changes active::
 
     $ ./bin/buildout

@@ -6,7 +6,7 @@ except ImportError:
 from base64 import decodestring
 
 from AccessControl import ClassSecurityInfo
-from Products.PrintingMailHost import LOG
+from Products.PrintingMailHost import LOG, FIXED_ADDRESS
 from Products.MailHost.MailHost import MailBase
 from StringIO import StringIO
 
@@ -48,6 +48,7 @@ class PrintingMailHost:
 
     def _send(self, mfrom, mto, messageText, debug=False, immediate=False):
         """Send the message."""
+        orig_messageText = messageText
         if isinstance(messageText, str):
             messageText = email.Parser.Parser().parsestr(messageText)
         base64_note = ""
@@ -79,22 +80,49 @@ class PrintingMailHost:
             print >> out, base64_note
             print >> out, ""
         LOG.info(out.getvalue())
+        if FIXED_ADDRESS:
+            # Send a real email to the given fixed address.
+            orig_send = getattr(self, PATCH_PREFIX + '_send', None)
+            if orig_send is not None:
+                LOG.info('Sending actual email to %s', FIXED_ADDRESS)
+                # We do not pass the 'debug' and 'immediate' keyword
+                # arguments, because not all implementations accept
+                # both keyword arguments.
+                orig_send(mfrom, FIXED_ADDRESS, orig_messageText)
 
 
-LOG.warn("""
+warning = ("""
 
 ******************************************************************************
 
-Monkey patching MailHosts to print emails to the terminal instead of
-sending them.
+Monkey patching MailHosts to print e-mails to the terminal.
+""")
+
+
+if FIXED_ADDRESS:
+    warning += ("""
+Also, ALL MAIL WILL BE SENT TO ONE ADDRESS: %s
+
+Change PRINTING_MAILHOST_FIXED_ADDRESS in the environment variables
+to change the address, or remove it to only print the e-mails.
+""" % FIXED_ADDRESS)
+else:
+    warning += ("""
+This is instead of sending them.
 
 NO MAIL WILL BE SENT FROM ZOPE AT ALL!
+""")
 
-Turn off debug mode or remove PrintingMailHost from the Products
-directory to turn this off.
+warning += ("""
+Turn off debug mode or remove Products.PrintingMailHost from the eggs
+or remove ENABLE_PRINTING_MAILHOST from the environment variables to
+return to normal e-mail sending.
+
+See https://pypi.python.org/pypi/Products.PrintingMailHost
 
 ******************************************************************************
 """)
+LOG.warn(warning)
 
 monkeyPatch(MailBase, PrintingMailHost)
 
