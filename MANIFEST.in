@@ -1,4 +1,3 @@
-recursive-include Products *.txt
-recursive-include docs *.GPL
-recursive-include docs *.rst
-recursive-include docs *.txt
+graft Products
+graft docs
+include buildout.cfg
