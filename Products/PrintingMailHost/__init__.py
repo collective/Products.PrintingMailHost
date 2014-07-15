@@ -14,5 +14,6 @@ if (ENABLED is not None and ENABLED.lower() in TRUISMS) or \
     LOG.warning("Hold on to your hats folks, I'm a-patchin'")
     import Patch
 
+
 def initialize(context):
     pass
