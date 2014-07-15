@@ -19,7 +19,7 @@ Download
 ========
 """ % (read("README.rst"),
        read('docs', 'INSTALL.rst'),
-       read('docs', 'HISTORY.rst'))
+       read('CHANGES.rst'))
 
 setup(name='Products.PrintingMailHost',
       version=version,
