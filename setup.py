@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '0.8dev'
+version = '0.8.dev0'
 
 setup(name='Products.PrintingMailHost',
       version=version,
@@ -9,13 +9,21 @@ setup(name='Products.PrintingMailHost',
                         open('CHANGES.rst').read()),
       classifiers=[
           "Framework :: Plone",
+          "Framework :: Plone :: 3.3",
+          "Framework :: Plone :: 4.0",
+          "Framework :: Plone :: 4.1",
+          "Framework :: Plone :: 4.2",
+          "Framework :: Plone :: 4.3",
           "Programming Language :: Python",
+          "Programming Language :: Python :: 2.4",
+          "Programming Language :: Python :: 2.6",
+          "Programming Language :: Python :: 2.7",
           "Topic :: Software Development :: Libraries :: Python Modules",
       ],
       keywords='zope debug mailhost',
       author='Martin Aspeli',
       author_email='plone-developers@lists.sourceforge.net',
-      url='http://svn.plone.org/svn/collective/Products.PrintingMailHost',
+      url='https://github.com/collective/Products.PrintingMailHost',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['Products'],
@@ -23,9 +31,5 @@ setup(name='Products.PrintingMailHost',
       zip_safe=False,
       install_requires=[
           'setuptools',
-          # -*- Extra requirements: -*-
       ],
-      entry_points="""
-      # -*- Entry points: -*-
-      """,
       )
