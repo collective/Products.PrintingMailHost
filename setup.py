@@ -13,12 +13,9 @@ long_description = """
 
 %s
 
-%s
-
 Download
 ========
 """ % (read("README.rst"),
-       read('docs', 'INSTALL.rst'),
        read('CHANGES.rst'))
 
 setup(name='Products.PrintingMailHost',
