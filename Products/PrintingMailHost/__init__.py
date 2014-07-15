@@ -13,6 +13,7 @@ if (ENABLED is not None and ENABLED.lower() in TRUISMS) or \
    (ENABLED is None and DevelopmentMode is True):
     LOG.warning("Hold on to your hats folks, I'm a-patchin'")
     import Patch
+    Patch  # pyflakes
 
 
 def initialize(context):
