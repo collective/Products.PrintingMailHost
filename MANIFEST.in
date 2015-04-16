@@ -2,3 +2,4 @@ graft Products
 graft docs
 include buildout.cfg
 include *rst
+global-exclude *.pyc
