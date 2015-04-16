@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.8 (unreleased)
+0.8 (2015-04-16)
 ----------------
 
 - Add environment variable ``PRINTING_MAILHOST_FIXED_ADDRESS`` to send
