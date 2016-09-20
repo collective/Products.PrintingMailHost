@@ -22,6 +22,12 @@ as of version 0.3.  See the installation instructions for more information
 about how to use it.
 
 
+Compatibility
+-------------
+
+Works on Plone 3.3, Plone 4, Plone 5.
+
+
 Author
 ------
 
@@ -59,7 +65,7 @@ buildout, you can do this:
 
     [instance]
     ...
-    environment-vars = 
+    environment-vars =
         ...
         ENABLE_PRINTING_MAILHOST True
 
@@ -67,7 +73,7 @@ buildout, you can do this:
 
     [instance]
     ...
-    environment-vars = 
+    environment-vars =
         ...
         ENABLE_PRINTING_MAILHOST False
 
