@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.9 (unreleased)
+1.0 (2016-09-20)
 ----------------
 
 - Treat ``FIXED_ADDRESS`` as a list.  Previously, depending on your
