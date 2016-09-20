@@ -4,7 +4,13 @@ Changelog
 0.9 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Treat ``FIXED_ADDRESS`` as a list.  Previously, depending on your
+  Plone version. a fixed address could get interpreted as a list of
+  single-character email addresses, which of course does not work.
+  Now it works properly.  You can also give a list of addresses by
+  separating them using spaces: ``one@example.org two@example.org``.
+  Fixes https://github.com/collective/Products.PrintingMailHost/issues/4
+  [maurits]
 
 
 0.8 (2015-04-16)

@@ -87,6 +87,10 @@ buildout, you can do this:
         ...
         PRINTING_MAILHOST_FIXED_ADDRESS admin@example.org
 
+  Or multiple addresses separated by spaces::
+
+        PRINTING_MAILHOST_FIXED_ADDRESS one@example.org two@example.org
+
   For clarity: this first prints the email, with the original
   recipient address, and then sends an actual email with the same
   contents to the fixed address you have specified.  The original
