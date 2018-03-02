@@ -1,4 +1,6 @@
-from Globals import DevelopmentMode
+# -*- coding: utf-8 -*-
+from App.config import getConfiguration
+
 import logging
 import os
 
@@ -21,7 +23,7 @@ def initialize(context):
 
     # check to see if the environment var is set to a 'true' value
     if (ENABLED is not None and ENABLED.lower() in TRUISMS) or \
-       (ENABLED is None and DevelopmentMode is True):
+       (ENABLED is None and getConfiguration().debug_mode is True):
         LOG.warning("Hold on to your hats folks, I'm a-patchin'")
         import Patch
         Patch  # pyflakes
