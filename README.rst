@@ -46,6 +46,8 @@ Clayton Parker <clayton (AT) sixfeetup (DOT) com>
 
 Maurits van Rees <maurits (AT) vanrees (DOT) org>
 
+Harald Friessnegger <harald (AT) webmeisterei (DOT) com>
+
 
 Products.PrintingMailHost Installation
 ======================================
