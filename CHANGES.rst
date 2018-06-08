@@ -4,8 +4,10 @@ Changelog
 1.0.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Check environment variables in Zope2 `initialize` instead of import time.
+  This allows to configure environment-vars in zope.conf and use them when
+  starting the instance with slc.zopescript
+  [fRiSi]
 
 1.0 (2016-09-20)
 ----------------
