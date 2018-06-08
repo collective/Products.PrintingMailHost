@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0.1 (unreleased)
+1.1.0 (unreleased)
 ------------------
 
 - Check environment variables in Zope2 `initialize` instead of import time.
