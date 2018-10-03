@@ -1,14 +1,12 @@
-import email.parser
-try:
-    from email.message import Message
-except ImportError:
-    from email import Message
-from base64 import decodestring
-
+# -*- coding: utf-8 -*-
 from AccessControl import ClassSecurityInfo
-from Products.PrintingMailHost import LOG, FIXED_ADDRESS
+from base64 import decodestring
+from email.message import Message
 from Products.MailHost.MailHost import MailBase
+from Products.PrintingMailHost import LOG, FIXED_ADDRESS
 from six import StringIO
+
+import email.parser
 
 PATCH_PREFIX = '_monkey_'
 
@@ -53,7 +51,7 @@ class PrintingMailHost:
             messageText = email.parser.Parser().parsestr(messageText)
         base64_note = ""
         out = StringIO()
-        print(" ", out)
+        print("", file=out)
         print(" ---- sending mail ---- ", file=out)
         print("From:", mfrom, file=out)
         print("To:", mto, file=out)

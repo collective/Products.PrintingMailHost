@@ -4,7 +4,8 @@ Changelog
 1.1.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Add support Python 3
+  [pbauer]
 
 
 1.1.0 (2018-06-08)
