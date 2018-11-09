@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import print_function
 from AccessControl import ClassSecurityInfo
 from base64 import decodestring
 from email.message import Message
