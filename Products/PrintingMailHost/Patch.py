@@ -121,7 +121,7 @@ See https://pypi.python.org/pypi/Products.PrintingMailHost
 
 ******************************************************************************
 """)
-LOG.warn(warning)
+LOG.warning(warning)
 
 monkeyPatch(MailBase, PrintingMailHost)
 

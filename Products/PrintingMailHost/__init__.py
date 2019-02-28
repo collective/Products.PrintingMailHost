@@ -9,7 +9,6 @@ ENABLED = None
 FIXED_ADDRESS = []
 
 TRUISMS = ['yes', 'y', 'true', 'on']
-DevelopmentMode = False
 
 
 def initialize(context):
@@ -26,6 +25,5 @@ def initialize(context):
     if (ENABLED is not None and ENABLED.lower() in TRUISMS) or \
        (ENABLED is None and getConfiguration().debug_mode is True):
         LOG.warning("Hold on to your hats folks, I'm a-patchin'")
-        DevelopmentMode = True  # noqa
         from Products.PrintingMailHost import Patch
         Patch  # pyflakes
