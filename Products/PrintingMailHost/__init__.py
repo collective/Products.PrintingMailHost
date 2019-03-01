@@ -9,6 +9,7 @@ ENABLED = None
 FIXED_ADDRESS = []
 
 TRUISMS = ['yes', 'y', 'true', 'on']
+DevelopmentMode = False
 
 
 def initialize(context):
@@ -24,6 +25,8 @@ def initialize(context):
     # check to see if the environment var is set to a 'true' value
     if (ENABLED is not None and ENABLED.lower() in TRUISMS) or \
        (ENABLED is None and getConfiguration().debug_mode is True):
+        # DevelopmentMode is checked by plone.api
+        DevelopmentMode = True  # noqa
         LOG.warning("Hold on to your hats folks, I'm a-patchin'")
         from Products.PrintingMailHost import Patch
         Patch  # pyflakes
