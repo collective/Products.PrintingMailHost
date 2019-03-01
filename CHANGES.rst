@@ -4,7 +4,8 @@ Changelog
 1.1.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Restore compatability with plone.api.
+  [pbauer]
 
 
 1.1.1 (2019-02-28)
