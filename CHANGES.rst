@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.1.2 (unreleased)
+1.1.2 (2019-03-05)
 ------------------
 
 - Restore compatability with plone.api.
