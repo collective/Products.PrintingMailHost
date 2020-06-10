@@ -8,6 +8,7 @@ setup(name='Products.PrintingMailHost',
       long_description=(open("README.rst").read() + '\n\n' +
                         open('CHANGES.rst').read()),
       classifiers=[
+          "Development Status :: 5 - Production/Stable",
           "Framework :: Plone",
           "Framework :: Plone :: 4.3",
           "Framework :: Plone :: 5.0",
