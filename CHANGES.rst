@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.1.4 (unreleased)
+1.1.4 (2020-06-10)
 ------------------
 
 - Fixed ``SyntaxError`` in previous release.  [tareqalam]
