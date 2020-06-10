@@ -72,9 +72,8 @@ class PrintingMailHost:
             else:
                 try:
                     messageText.set_payload(decodestring(body))    
-                except TypeError: # Python 3
-                    messageText.set_payload(decodestring(body).encode("utf8") 
-                                              
+                except TypeError:  # Python 3
+                    messageText.set_payload(decodestring(body).encode("utf8"))
         print(messageText, file=out)
         print(" ---- done ---- ", file=out)
         print("", file=out)
