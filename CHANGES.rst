@@ -4,7 +4,8 @@ Changelog
 1.1.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Encoding fix for Python 3
+  [ajung]
 
 
 1.1.2 (2019-03-05)
