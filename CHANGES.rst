@@ -4,7 +4,7 @@ Changelog
 1.1.4 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fixed ``SyntaxError`` in previous release.  [tareqalam]
 
 
 1.1.3 (2020-06-10)
