@@ -6,8 +6,14 @@ from email.message import Message
 from Products.MailHost.MailHost import MailBase
 from Products.PrintingMailHost import LOG, FIXED_ADDRESS
 from six import StringIO
+try:
+    # Python 3
+    from email import message_from_bytes
+except ImportError:
+    # Python 2
+    from email import message_from_string as message_from_bytes
 
-import email.parser
+import six
 
 PATCH_PREFIX = '_monkey_'
 
@@ -48,8 +54,8 @@ class PrintingMailHost:
     def _send(self, mfrom, mto, messageText, debug=False, immediate=False):
         """Send the message."""
         orig_messageText = messageText
-        if isinstance(messageText, str):
-            messageText = email.parser.Parser().parsestr(messageText)
+        if isinstance(messageText, six.binary_type):
+            messageText = message_from_bytes(messageText)
         base64_note = ""
         out = StringIO()
         print("", file=out)
@@ -71,7 +77,7 @@ class PrintingMailHost:
                         break
             else:
                 try:
-                    messageText.set_payload(decodestring(body))    
+                    messageText.set_payload(decodestring(body))
                 except TypeError:  # Python 3
                     messageText.set_payload(decodestring(body).encode("utf8"))
         print(messageText, file=out)
