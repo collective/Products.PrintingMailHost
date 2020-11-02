@@ -4,7 +4,8 @@ Changelog
 1.1.5 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix support for MailHost 4.10 (see `issue 33 <https://github.com/zopefoundation/Products.MailHost/issues/33>`_).
+  [pbauer]
 
 
 1.1.4 (2020-06-10)
