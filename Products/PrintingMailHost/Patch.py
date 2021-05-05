@@ -4,8 +4,13 @@ from AccessControl import ClassSecurityInfo
 from base64 import decodestring
 from email.message import Message
 from Products.MailHost.MailHost import MailBase
-from Products.PrintingMailHost import LOG, FIXED_ADDRESS
+from Products.PrintingMailHost import FIXED_ADDRESS
+from Products.PrintingMailHost import LOG
 from six import StringIO
+
+import six
+
+
 try:
     # Python 3
     from email import message_from_bytes
@@ -13,9 +18,8 @@ except ImportError:
     # Python 2
     from email import message_from_string as message_from_bytes
 
-import six
 
-PATCH_PREFIX = '_monkey_'
+PATCH_PREFIX = "_monkey_"
 
 __refresh_module__ = 0
 
@@ -31,7 +35,7 @@ def monkeyPatch(originalClass, patchingClass):
     """
     for name, newAttr in patchingClass.__dict__.items():
         # don't overwrite doc or module informations
-        if name not in ('__doc__', '__module__', '__dict__'):
+        if name not in ("__doc__", "__module__", "__dict__"):
             # safe the old attribute as __monkey_name if exists
             # __dict__ doesn't show inherited attributes :/
             orig = getattr(originalClass, name, None)
@@ -47,9 +51,10 @@ def monkeyPatch(originalClass, patchingClass):
 
 class PrintingMailHost:
     """MailHost which prints to output."""
+
     security = ClassSecurityInfo()
 
-    security.declarePrivate('_send')
+    security.declarePrivate("_send")
 
     def _send(self, mfrom, mto, messageText, debug=False, immediate=False):
         """Send the message."""
@@ -62,15 +67,16 @@ class PrintingMailHost:
         print(" ---- sending mail ---- ", file=out)
         print("From:", mfrom, file=out)
         print("To:", mto, file=out)
-        if messageText.get('Content-Transfer-Encoding') == 'base64':
-            base64_note = "NOTE: The email payload was originally base64 " \
-                          "encoded.  It was decoded for debug purposes."
+        if messageText.get("Content-Transfer-Encoding") == "base64":
+            base64_note = (
+                "NOTE: The email payload was originally base64 "
+                "encoded.  It was decoded for debug purposes."
+            )
             body = messageText.get_payload()
             if isinstance(body, list):
                 for attachment in body:
                     if isinstance(attachment, Message):
-                        messageText.set_payload(
-                            decodestring(attachment.get_payload()))
+                        messageText.set_payload(decodestring(attachment.get_payload()))
                         break
                     elif isinstance(attachment, str):
                         messageText.set_payload(decodestring(attachment))
@@ -89,38 +95,41 @@ class PrintingMailHost:
         LOG.info(out.getvalue())
         if FIXED_ADDRESS:
             # Send a real email to the given fixed address.
-            orig_send = getattr(self, PATCH_PREFIX + '_send', None)
+            orig_send = getattr(self, PATCH_PREFIX + "_send", None)
             if orig_send is not None:
-                LOG.info('Sending actual email to %s', FIXED_ADDRESS)
+                LOG.info("Sending actual email to %s", FIXED_ADDRESS)
                 # We do not pass the 'debug' and 'immediate' keyword
                 # arguments, because not all implementations accept
                 # both keyword arguments.
                 orig_send(mfrom, FIXED_ADDRESS, orig_messageText)
 
 
-warning = ("""
+warning = """
 
 ******************************************************************************
 
 Monkey patching MailHosts to print e-mails to the terminal.
-""")
+"""
 
 
 if FIXED_ADDRESS:
-    warning += ("""
+    warning += (
+        """
 Also, ALL MAIL WILL BE SENT TO ONE ADDRESS: %s
 
 Change PRINTING_MAILHOST_FIXED_ADDRESS in the environment variables
 to change the address, or remove it to only print the e-mails.
-""" % FIXED_ADDRESS)
+"""
+        % FIXED_ADDRESS
+    )
 else:
-    warning += ("""
+    warning += """
 This is instead of sending them.
 
 NO MAIL WILL BE SENT FROM ZOPE AT ALL!
-""")
+"""
 
-warning += ("""
+warning += """
 Turn off debug mode or remove Products.PrintingMailHost from the eggs
 or remove ENABLE_PRINTING_MAILHOST from the environment variables to
 return to normal e-mail sending.
@@ -128,7 +137,7 @@ return to normal e-mail sending.
 See https://pypi.python.org/pypi/Products.PrintingMailHost
 
 ******************************************************************************
-""")
+"""
 LOG.warning(warning)
 
 monkeyPatch(MailBase, PrintingMailHost)
@@ -149,8 +158,7 @@ else:
     monkeyPatch(MaildropHost, PrintingMailHost)
 
 try:
-    from Products.SecureMaildropHost.SecureMaildropHost import \
-        SecureMaildropHost
+    from Products.SecureMaildropHost.SecureMaildropHost import SecureMaildropHost
 except ImportError:
     pass
 else:
