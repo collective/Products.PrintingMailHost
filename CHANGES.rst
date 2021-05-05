@@ -4,7 +4,7 @@ Changelog
 1.1.6 (unreleased)
 ------------------
 
-- Fix Python 3.9 compatability.
+- Fix Python 3.9 compatibility.
   [thet]
 
 
