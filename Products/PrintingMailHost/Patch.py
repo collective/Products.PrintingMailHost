@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
 from AccessControl import ClassSecurityInfo
-from base64 import decodestring
 from email.message import Message
 from Products.MailHost.MailHost import MailBase
 from Products.PrintingMailHost import FIXED_ADDRESS
@@ -9,6 +8,13 @@ from Products.PrintingMailHost import LOG
 from six import StringIO
 
 import six
+
+
+try:
+    # Python 3.9 removed BBB alias ``decodestring``.
+    from base64 import decodebytes
+except ImportError:
+    from base64 import decodestring as decodebytes
 
 
 try:
@@ -76,16 +82,16 @@ class PrintingMailHost:
             if isinstance(body, list):
                 for attachment in body:
                     if isinstance(attachment, Message):
-                        messageText.set_payload(decodestring(attachment.get_payload()))
+                        messageText.set_payload(decodebytes(attachment.get_payload()))
                         break
                     elif isinstance(attachment, str):
-                        messageText.set_payload(decodestring(attachment))
+                        messageText.set_payload(decodebytes(attachment))
                         break
             else:
                 try:
-                    messageText.set_payload(decodestring(body))
+                    messageText.set_payload(decodebytes(body))
                 except TypeError:  # Python 3
-                    messageText.set_payload(decodestring(body).encode("utf8"))
+                    messageText.set_payload(decodebytes(body).encode("utf8"))
         print(messageText, file=out)
         print(" ---- done ---- ", file=out)
         print("", file=out)

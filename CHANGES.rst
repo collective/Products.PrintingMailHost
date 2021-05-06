@@ -4,7 +4,8 @@ Changelog
 1.1.6 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix Python 3.9 compatibility.
+  [thet]
 
 
 1.1.5 (2020-11-02)
