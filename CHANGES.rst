@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.1.6 (unreleased)
+1.1.6 (2021-05-06)
 ------------------
 
 - Fix Python 3.9 compatibility.
