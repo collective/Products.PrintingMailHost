@@ -140,7 +140,7 @@ Turn off debug mode or remove Products.PrintingMailHost from the eggs
 or remove ENABLE_PRINTING_MAILHOST from the environment variables to
 return to normal e-mail sending.
 
-See https://pypi.python.org/pypi/Products.PrintingMailHost
+See https://pypi.org/project/Products.PrintingMailHost
 
 ******************************************************************************
 """
