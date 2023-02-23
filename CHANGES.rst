@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.1.7 (unreleased)
+1.1.7 (2023-02-23)
 ------------------
 
 - Fixed URL in startup message.  [gforcada]
