@@ -4,7 +4,7 @@ Changelog
 1.1.7 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fixed URL in startup message.  [gforcada]
 
 
 1.1.6 (2021-05-06)
