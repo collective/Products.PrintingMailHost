@@ -25,7 +25,7 @@ about how to use it.
 Compatibility
 -------------
 
-Works on Plone 3.3, Plone 4, Plone 5.0, 5.1, 5.2 an 6 (in Python 2.7, 3.6 and 3.7).
+Works on Plone 4.3, Plone 5.0, 5.1, 5.2 and 6 (in Python 2.7, and 3.6-3.11).
 
 
 Author
