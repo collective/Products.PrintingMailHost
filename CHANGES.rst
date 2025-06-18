@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.1.8 (unreleased)
+1.1.8 (2025-06-19)
 ------------------
 
 - Update readme with compatibility information.  [ksuess]
