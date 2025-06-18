@@ -4,7 +4,7 @@ Changelog
 1.1.8 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Update readme with compatibility information.  [ksuess]
 
 
 1.1.7 (2023-02-23)
