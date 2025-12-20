@@ -5,9 +5,6 @@ from Products.MailHost.MailHost import MailBase
 from Products.PrintingMailHost import FIXED_ADDRESS
 from Products.PrintingMailHost import LOG
 
-import six
-
-
 try:
     # Python 3.9 removed BBB alias ``decodestring``.
     from base64 import decodebytes
