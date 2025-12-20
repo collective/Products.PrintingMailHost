@@ -1,9 +1,9 @@
 from AccessControl import ClassSecurityInfo
 from email.message import Message
+from io import StringIO
 from Products.MailHost.MailHost import MailBase
 from Products.PrintingMailHost import FIXED_ADDRESS
 from Products.PrintingMailHost import LOG
-from io import StringIO
 
 import six
 
