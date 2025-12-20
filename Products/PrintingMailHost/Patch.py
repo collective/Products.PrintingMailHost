@@ -38,7 +38,7 @@ def monkeyPatch(originalClass, patchingClass):
     * Overwrites/adds these attributes in original class
     """
     for name, newAttr in patchingClass.__dict__.items():
-        # don't overwrite doc or module informations
+        # don't overwrite doc or module information
         if name not in ("__doc__", "__module__", "__dict__"):
             # safe the old attribute as __monkey_name if exists
             # __dict__ doesn't show inherited attributes :/

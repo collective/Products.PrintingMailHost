@@ -59,7 +59,7 @@ Bug fixes:
 1.1.2 (2019-03-05)
 ------------------
 
-- Restore compatability with plone.api.
+- Restore compatibility with plone.api.
   [pbauer]
 
 
@@ -158,7 +158,7 @@ Bug fixes:
 ---
 
 - Updated to use the new standard log mechanism: logging.getLogger.
-  Reformated messages/docstrings.
+  Reformatted messages/docstrings.
   [dtremea] (2006-03-17)
 
 - Extended to also patch SecureMailBase from SecureMailHost, if
