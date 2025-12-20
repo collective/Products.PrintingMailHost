@@ -1,23 +1,11 @@
 from AccessControl import ClassSecurityInfo
+from base64 import decodestring as decodebytes
+from email import message_from_bytes
 from email.message import Message
 from io import StringIO
 from Products.MailHost.MailHost import MailBase
 from Products.PrintingMailHost import FIXED_ADDRESS
 from Products.PrintingMailHost import LOG
-
-try:
-    # Python 3.9 removed BBB alias ``decodestring``.
-    from base64 import decodebytes
-except ImportError:
-    from base64 import decodestring as decodebytes
-
-
-try:
-    # Python 3
-    from email import message_from_bytes
-except ImportError:
-    # Python 2
-    from email import message_from_string as message_from_bytes
 
 
 PATCH_PREFIX = "_monkey_"
