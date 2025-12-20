@@ -3,3 +3,4 @@ graft docs
 include buildout.cfg
 include *md
 global-exclude *.pyc
+recursive-exclude news *
