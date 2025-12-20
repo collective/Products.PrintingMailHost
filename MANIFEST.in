@@ -1,5 +1,5 @@
 graft Products
 graft docs
 include buildout.cfg
-include *rst
+include *md
 global-exclude *.pyc

@@ -1,5 +1,4 @@
-Products.PrintingMailHost
-=========================
+# Products.PrintingMailHost
 
 This is a hack. :)
 
@@ -21,22 +20,16 @@ You can optionally enable the PrintingMailHost with an environment variable
 as of version 0.3.  See the installation instructions for more information
 about how to use it.
 
-
-Compatibility
--------------
+## Compatibility
 
 Works on Plone 4.3, Plone 5.0, 5.1, 5.2 and 6 (in Python 2.7, and 3.6-3.11).
 
-
-Author
-------
+## Author
 
 Martin Aspeli <optilude (AT) gmx (DOT) net>
     Initial idea, release management
 
-
-Contributors
-------------
+## Contributors
 
 Dorneles Tremea <deo (AT) plonesolutions (DOT) com>
     Fixed to work both with old-style and new-style classes. Extended
@@ -48,60 +41,70 @@ Maurits van Rees <maurits (AT) vanrees (DOT) org>
 
 Harald Friessnegger <harald (AT) webmeisterei (DOT) com>
 
+## Installation
 
-Products.PrintingMailHost Installation
-======================================
-
-To include ``Products.PrintingMailHost`` in your pip installation of Plone, just add it to ``requirements.txt``.
+To include `Products.PrintingMailHost` in your pip installation of Plone, just add it to `requirements.txt`.
 
 To install Products.PrintingMailHost into your Plone instance in
 buildout, you can do this:
 
-- Add ``Products.PrintingMailHost`` to the list of eggs to install, e.g.::
+- Add `Products.PrintingMailHost` to the list of eggs to install, e.g.:
 
-    [instance]
+```ini
+[instance]
+...
+eggs =
     ...
-    eggs =
-        ...
-        Products.PrintingMailHost
+    Products.PrintingMailHost
+```
 
-- If you want to enable PrintingMailHost when debug-mode is off::
+- If you want to enable PrintingMailHost when debug-mode is off:
 
-    [instance]
+```ini
+[instance]
+...
+environment-vars =
     ...
-    environment-vars =
-        ...
-        ENABLE_PRINTING_MAILHOST True
+    ENABLE_PRINTING_MAILHOST True
+```
 
-- If you want to disable PrintingMailHost when debug-mode is on::
+- If you want to disable PrintingMailHost when debug-mode is on:
 
-    [instance]
+```ini
+[instance]
+...
+environment-vars =
     ...
-    environment-vars =
-        ...
-        ENABLE_PRINTING_MAILHOST False
+    ENABLE_PRINTING_MAILHOST False
+```
 
 - If PrintingMailHost is enabled, and you *additionally* want to send
   each email to a fixed address, you can add another environment
-  variable::
+  variable:
 
-    [instance]
+```ini
+[instance]
+...
+environment-vars =
     ...
-    environment-vars =
-        ...
-        PRINTING_MAILHOST_FIXED_ADDRESS admin@example.org
+    PRINTING_MAILHOST_FIXED_ADDRESS admin@example.org
+```
 
-  Or multiple addresses separated by spaces::
+Or multiple addresses separated by spaces:
 
-        PRINTING_MAILHOST_FIXED_ADDRESS one@example.org two@example.org
+```ini
+    PRINTING_MAILHOST_FIXED_ADDRESS one@example.org two@example.org
+```
 
-  For clarity: this first prints the email, with the original
-  recipient address, and then sends an actual email with the same
-  contents to the fixed address you have specified.  The original
-  recipient is visible in the ``To:`` field.  It is similar to
-  receiving a blind carbon copy (bcc) of an email, except that the
-  original recipient never gets the email.
+For clarity: this first prints the email, with the original
+recipient address, and then sends an actual email with the same
+contents to the fixed address you have specified.  The original
+recipient is visible in the `To:` field.  It is similar to
+receiving a blind carbon copy (bcc) of an email, except that the
+original recipient never gets the email.
 
-- Re-run buildout in order to make any of the above changes active::
+- Re-run buildout in order to make any of the above changes active:
 
-    $ ./bin/buildout
+```ini
+./bin/buildout
+```

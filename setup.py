@@ -1,6 +1,9 @@
+from pathlib import Path
 from setuptools import find_packages
 from setuptools import setup
 
+
+long_description = Path("README.md").read_text() + "\n" + Path("CHANGES.md").read_text()
 
 version = "1.1.9.dev0"
 
@@ -8,7 +11,8 @@ setup(
     name="Products.PrintingMailHost",
     version=version,
     description="A monkey patch to send MailHost messages to standard out",
-    long_description=(open("README.rst").read() + "\n\n" + open("CHANGES.rst").read()),
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Framework :: Plone",
