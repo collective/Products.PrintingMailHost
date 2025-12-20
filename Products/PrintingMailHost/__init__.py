@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from App.config import getConfiguration
 
 import logging

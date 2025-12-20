@@ -1,11 +1,9 @@
-# -*- coding: utf-8 -*-
-from __future__ import print_function
 from AccessControl import ClassSecurityInfo
 from email.message import Message
 from Products.MailHost.MailHost import MailBase
 from Products.PrintingMailHost import FIXED_ADDRESS
 from Products.PrintingMailHost import LOG
-from six import StringIO
+from io import StringIO
 
 import six
 
@@ -65,7 +63,7 @@ class PrintingMailHost:
     def _send(self, mfrom, mto, messageText, debug=False, immediate=False):
         """Send the message."""
         orig_messageText = messageText
-        if isinstance(messageText, six.binary_type):
+        if isinstance(messageText, bytes):
             messageText = message_from_bytes(messageText)
         base64_note = ""
         out = StringIO()
