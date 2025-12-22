@@ -1,28 +1,11 @@
-# -*- coding: utf-8 -*-
-from __future__ import print_function
 from AccessControl import ClassSecurityInfo
+from base64 import decodestring as decodebytes
+from email import message_from_bytes
 from email.message import Message
+from io import StringIO
 from Products.MailHost.MailHost import MailBase
 from Products.PrintingMailHost import FIXED_ADDRESS
 from Products.PrintingMailHost import LOG
-from six import StringIO
-
-import six
-
-
-try:
-    # Python 3.9 removed BBB alias ``decodestring``.
-    from base64 import decodebytes
-except ImportError:
-    from base64 import decodestring as decodebytes
-
-
-try:
-    # Python 3
-    from email import message_from_bytes
-except ImportError:
-    # Python 2
-    from email import message_from_string as message_from_bytes
 
 
 PATCH_PREFIX = "_monkey_"
@@ -40,7 +23,7 @@ def monkeyPatch(originalClass, patchingClass):
     * Overwrites/adds these attributes in original class
     """
     for name, newAttr in patchingClass.__dict__.items():
-        # don't overwrite doc or module informations
+        # don't overwrite doc or module information
         if name not in ("__doc__", "__module__", "__dict__"):
             # safe the old attribute as __monkey_name if exists
             # __dict__ doesn't show inherited attributes :/
@@ -65,7 +48,7 @@ class PrintingMailHost:
     def _send(self, mfrom, mto, messageText, debug=False, immediate=False):
         """Send the message."""
         orig_messageText = messageText
-        if isinstance(messageText, six.binary_type):
+        if isinstance(messageText, bytes):
             messageText = message_from_bytes(messageText)
         base64_note = ""
         out = StringIO()

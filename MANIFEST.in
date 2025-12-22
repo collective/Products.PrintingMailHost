@@ -1,5 +1,6 @@
-graft Products
+graft src
 graft docs
 include buildout.cfg
-include *rst
+include *md
 global-exclude *.pyc
+recursive-exclude news *
