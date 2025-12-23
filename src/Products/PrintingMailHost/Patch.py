@@ -1,5 +1,5 @@
 from AccessControl import ClassSecurityInfo
-from base64 import decodestring as decodebytes
+from base64 import decodebytes
 from email import message_from_bytes
 from email.message import Message
 from io import StringIO
