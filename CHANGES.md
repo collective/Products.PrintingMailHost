@@ -9,6 +9,13 @@
 
 <!-- towncrier release notes start -->
 
+## 2.0.1 (2025-12-23)
+
+
+### Bug fixes:
+
+- Fix import of ``base64.decodebytes``.  [maurits] 
+
 ## 2.0.0 (2025-12-23)
 
 
