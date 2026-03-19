@@ -3,7 +3,6 @@ from App.config import getConfiguration
 import logging
 import os
 
-
 LOG = None
 ENABLED = None
 FIXED_ADDRESS = []

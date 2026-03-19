@@ -7,7 +7,6 @@ from Products.MailHost.MailHost import MailBase
 from Products.PrintingMailHost import FIXED_ADDRESS
 from Products.PrintingMailHost import LOG
 
-
 PATCH_PREFIX = "_monkey_"
 
 __refresh_module__ = 0
@@ -102,15 +101,12 @@ Monkey patching MailHosts to print e-mails to the terminal.
 
 
 if FIXED_ADDRESS:
-    warning += (
-        """
+    warning += """
 Also, ALL MAIL WILL BE SENT TO ONE ADDRESS: %s
 
 Change PRINTING_MAILHOST_FIXED_ADDRESS in the environment variables
 to change the address, or remove it to only print the e-mails.
-"""
-        % FIXED_ADDRESS
-    )
+""" % FIXED_ADDRESS
 else:
     warning += """
 This is instead of sending them.
