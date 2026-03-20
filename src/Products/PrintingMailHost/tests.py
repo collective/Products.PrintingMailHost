@@ -39,6 +39,26 @@ class TestIntegration(unittest.TestCase):
             self.assertIn("Subject: Hello", output)
             self.assertIn("message text", output)
 
+    def test_fixed_address(self):
+        from Products.PrintingMailHost import Patch
+
+        orig_fixed_address = Patch.FIXED_ADDRESS
+        Patch.FIXED_ADDRESS = ["another@example.org"]
+        try:
+            with self.assertLogs("PrintingMailHost", level="INFO") as logs:
+                self.send()
+                self.assertEqual(len(logs.output), 2)
+                output = logs.output[0]
+                self.assertIn("From: me@example.org", output)
+                self.assertIn("To: you@example.org", output)
+                self.assertIn("Subject: Hello", output)
+                self.assertIn("message text", output)
+                self.assertIn(
+                    "Sending actual email to ['another@example.org']", logs.output[1]
+                )
+        finally:
+            Patch.FIXED_ADDRESS = orig_fixed_address
+
     def test_unpatch(self):
         from Products.PrintingMailHost.Patch import undo_patches
 
