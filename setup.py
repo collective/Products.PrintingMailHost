@@ -35,4 +35,11 @@ setup(
         "Products.MailHost",
         "Zope",
     ],
+    extras_require={
+        "test": [
+            "plone.app.testing",
+            "plone.testing",
+            "Products.CMFCore",
+        ]
+    },
 )
