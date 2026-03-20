@@ -12,6 +12,13 @@ class PrintingMailHostFixture(PloneSandboxLayer):
         os.environ["ENABLE_PRINTING_MAILHOST"] = "yes"
         zope.installProduct(app, "Products.PrintingMailHost")
 
+    def tearDownZope(self, app):
+        from Products.PrintingMailHost.Patch import undoPatches
+
+        undoPatches()
+        breakpoint()
+        zope.uninstallProduct(app, "Products.PrintingMailHost")
+
 
 PRINTINGMAILHOST_FIXTURE = PrintingMailHostFixture()
 

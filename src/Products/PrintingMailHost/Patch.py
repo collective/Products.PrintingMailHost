@@ -37,6 +37,32 @@ def monkeyPatch(originalClass, patchingClass):
             setattr(originalClass, name, newAttr)
 
 
+def undoMonkeyPatch(originalClass, patchingClass):
+    """Undo monkey patch of original class with attributes from new class.
+
+    * Takes all attributes and methods except __doc__ and __module__
+      from patching class
+    * Restores original attributes that were saved as _monkey_name
+    """
+    for name, newAttr in patchingClass.__dict__.items():
+        # don't overwrite doc or module information
+        if name not in ("__doc__", "__module__", "__dict__"):
+            # safe the old attribute as __monkey_name if exists
+            # __dict__ doesn't show inherited attributes :/
+            current = getattr(originalClass, name, None)
+            if current is None:
+                # This was not patched.
+                continue
+            stored_orig_name = PATCH_PREFIX + name
+            stored_orig = getattr(originalClass, stored_orig_name, None)
+            if stored_orig is None:
+                # There is nothing to restore.
+                continue
+            # Restore the original.
+            setattr(originalClass, name, stored_orig)
+            delattr(originalClass, stored_orig_name)
+
+
 class PrintingMailHost:
     """MailHost which prints to output."""
 
@@ -126,7 +152,7 @@ See https://pypi.org/project/Products.PrintingMailHost
 LOG.warning(warning)
 
 monkeyPatch(MailBase, PrintingMailHost)
-
+_patched_classes = [MailBase]
 # Patch some other mail host implementations.
 try:
     from Products.SecureMailHost.SecureMailHost import SecureMailBase
@@ -134,6 +160,7 @@ except ImportError:
     pass
 else:
     monkeyPatch(SecureMailBase, PrintingMailHost)
+    _patched_classes.append(SecureMailBase)
 
 try:
     from Products.MaildropHost.MaildropHost import MaildropHost
@@ -141,6 +168,7 @@ except ImportError:
     pass
 else:
     monkeyPatch(MaildropHost, PrintingMailHost)
+    _patched_classes.append(MaildropHost)
 
 try:
     from Products.SecureMaildropHost.SecureMaildropHost import SecureMaildropHost
@@ -148,3 +176,9 @@ except ImportError:
     pass
 else:
     monkeyPatch(SecureMaildropHost, PrintingMailHost)
+    _patched_classes.append(SecureMaildropHost)
+
+
+def undoPatches():
+    for klass in _patched_classes:
+        undoMonkeyPatch(klass, PrintingMailHost)
