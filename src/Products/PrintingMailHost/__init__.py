@@ -3,7 +3,6 @@ from App.config import getConfiguration
 import logging
 import os
 
-
 LOG = None
 ENABLED = None
 FIXED_ADDRESS = []
@@ -29,6 +28,6 @@ def initialize(context):
         # DevelopmentMode is checked by plone.api
         DevelopmentMode = True  # noqa
         LOG.warning("Hold on to your hats folks, I'm a-patchin'")
-        from Products.PrintingMailHost import Patch
+        from Products.PrintingMailHost.Patch import apply_patches
 
-        Patch  # pyflakes
+        apply_patches()

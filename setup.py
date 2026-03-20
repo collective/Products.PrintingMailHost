@@ -1,10 +1,9 @@
 from pathlib import Path
 from setuptools import setup
 
-
 long_description = Path("README.md").read_text() + "\n" + Path("CHANGES.md").read_text()
 
-version = "2.0.2.dev0"
+version = "2.1.0.dev0"
 
 setup(
     name="Products.PrintingMailHost",
@@ -22,6 +21,7 @@ setup(
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
         "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
     keywords="zope debug mailhost",
@@ -36,4 +36,11 @@ setup(
         "Products.MailHost",
         "Zope",
     ],
+    extras_require={
+        "test": [
+            "plone.app.testing",
+            "plone.testing",
+            "Products.CMFCore",
+        ]
+    },
 )

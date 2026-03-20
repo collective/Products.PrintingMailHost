@@ -7,7 +7,6 @@ from Products.MailHost.MailHost import MailBase
 from Products.PrintingMailHost import FIXED_ADDRESS
 from Products.PrintingMailHost import LOG
 
-
 PATCH_PREFIX = "_monkey_"
 
 __refresh_module__ = 0
@@ -38,6 +37,32 @@ def monkeyPatch(originalClass, patchingClass):
             setattr(originalClass, name, newAttr)
 
 
+def undoMonkeyPatch(originalClass, patchingClass):
+    """Undo monkey patch of original class with attributes from new class.
+
+    * Takes all attributes and methods except __doc__ and __module__
+      from patching class
+    * Restores original attributes that were saved as _monkey_name
+    """
+    for name, newAttr in patchingClass.__dict__.items():
+        # don't overwrite doc or module information
+        if name not in ("__doc__", "__module__", "__dict__"):
+            # safe the old attribute as __monkey_name if exists
+            # __dict__ doesn't show inherited attributes :/
+            current = getattr(originalClass, name, None)
+            if current is None:
+                # This was not patched.
+                continue
+            stored_orig_name = PATCH_PREFIX + name
+            stored_orig = getattr(originalClass, stored_orig_name, None)
+            if stored_orig is None:
+                # There is nothing to restore.
+                continue
+            # Restore the original.
+            setattr(originalClass, name, stored_orig)
+            delattr(originalClass, stored_orig_name)
+
+
 class PrintingMailHost:
     """MailHost which prints to output."""
 
@@ -45,8 +70,31 @@ class PrintingMailHost:
 
     security.declarePrivate("_send")
 
-    def _send(self, mfrom, mto, messageText, debug=False, immediate=False):
-        """Send the message."""
+    def _send(self, mfrom, mto, messageText, immediate=False, debug=False):
+        """Send the message.
+
+        The various definitions of _send in Plone (mostly tests) are all:
+
+            def _send(self, mfrom, mto, messageText, immediate=False)
+
+        except in collective.MockMailHost, which has:
+
+            def _send(self, mfrom, mto, messageText, debug=False):
+
+        and it actually ignores the 'debug' keyword argument.
+
+        Originally we had as order: `debug=False, immediate=False`.
+        But `Products/MailHost/MailHost.py` does not use keyword arguments,
+        but calls:
+
+            self._send(mfrom, mto, msg, immediate)
+
+        With our original order this meant that only our debug argument was
+        affected by the last value that got passed, and immediate was always
+        False.  So I switched this around.  The effect can be seen in
+        test_fixed_address, where a ConnectionRefusedError should be raise
+        when we send immediately.
+        """
         orig_messageText = messageText
         if isinstance(messageText, bytes):
             messageText = message_from_bytes(messageText)
@@ -87,10 +135,13 @@ class PrintingMailHost:
             orig_send = getattr(self, PATCH_PREFIX + "_send", None)
             if orig_send is not None:
                 LOG.info("Sending actual email to %s", FIXED_ADDRESS)
-                # We do not pass the 'debug' and 'immediate' keyword
-                # arguments, because not all implementations accept
-                # both keyword arguments.
-                orig_send(mfrom, FIXED_ADDRESS, orig_messageText)
+                try:
+                    orig_send(
+                        mfrom, FIXED_ADDRESS, orig_messageText, immediate=immediate
+                    )
+                except TypeError:
+                    # Not all implementations accept the 'immediate' keyword argument.
+                    orig_send(mfrom, FIXED_ADDRESS, orig_messageText)
 
 
 warning = """
@@ -102,15 +153,12 @@ Monkey patching MailHosts to print e-mails to the terminal.
 
 
 if FIXED_ADDRESS:
-    warning += (
-        """
+    warning += """
 Also, ALL MAIL WILL BE SENT TO ONE ADDRESS: %s
 
 Change PRINTING_MAILHOST_FIXED_ADDRESS in the environment variables
 to change the address, or remove it to only print the e-mails.
-"""
-        % FIXED_ADDRESS
-    )
+""" % FIXED_ADDRESS
 else:
     warning += """
 This is instead of sending them.
@@ -129,26 +177,35 @@ See https://pypi.org/project/Products.PrintingMailHost
 """
 LOG.warning(warning)
 
-monkeyPatch(MailBase, PrintingMailHost)
-
-# Patch some other mail host implementations.
+_mailhost_classes = [MailBase]
+# Search for some other mail host implementations.
 try:
     from Products.SecureMailHost.SecureMailHost import SecureMailBase
 except ImportError:
     pass
 else:
-    monkeyPatch(SecureMailBase, PrintingMailHost)
+    _mailhost_classes.append(SecureMailBase)
 
 try:
     from Products.MaildropHost.MaildropHost import MaildropHost
 except ImportError:
     pass
 else:
-    monkeyPatch(MaildropHost, PrintingMailHost)
+    _mailhost_classes.append(MaildropHost)
 
 try:
     from Products.SecureMaildropHost.SecureMaildropHost import SecureMaildropHost
 except ImportError:
     pass
 else:
-    monkeyPatch(SecureMaildropHost, PrintingMailHost)
+    _mailhost_classes.append(SecureMaildropHost)
+
+
+def apply_patches():
+    for klass in _mailhost_classes:
+        monkeyPatch(klass, PrintingMailHost)
+
+
+def undo_patches():
+    for klass in _mailhost_classes:
+        undoMonkeyPatch(klass, PrintingMailHost)

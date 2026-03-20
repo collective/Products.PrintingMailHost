@@ -22,7 +22,7 @@ about how to use it.
 
 ## Compatibility
 
-Works on Plone 6.2 (in Python 3.10-3.13).
+Works on Plone 6.2 (in Python 3.10-3.14).
 
 ## Author
 
