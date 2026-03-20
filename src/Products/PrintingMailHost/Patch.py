@@ -151,34 +151,35 @@ See https://pypi.org/project/Products.PrintingMailHost
 """
 LOG.warning(warning)
 
-monkeyPatch(MailBase, PrintingMailHost)
-_patched_classes = [MailBase]
-# Patch some other mail host implementations.
+_mailhost_classes = [MailBase]
+# Search for some other mail host implementations.
 try:
     from Products.SecureMailHost.SecureMailHost import SecureMailBase
 except ImportError:
     pass
 else:
-    monkeyPatch(SecureMailBase, PrintingMailHost)
-    _patched_classes.append(SecureMailBase)
+    _mailhost_classes.append(SecureMailBase)
 
 try:
     from Products.MaildropHost.MaildropHost import MaildropHost
 except ImportError:
     pass
 else:
-    monkeyPatch(MaildropHost, PrintingMailHost)
-    _patched_classes.append(MaildropHost)
+    _mailhost_classes.append(MaildropHost)
 
 try:
     from Products.SecureMaildropHost.SecureMaildropHost import SecureMaildropHost
 except ImportError:
     pass
 else:
-    monkeyPatch(SecureMaildropHost, PrintingMailHost)
-    _patched_classes.append(SecureMaildropHost)
+    _mailhost_classes.append(SecureMaildropHost)
 
 
-def undoPatches():
-    for klass in _patched_classes:
+def apply_patches():
+    for klass in _mailhost_classes:
+        monkeyPatch(klass, PrintingMailHost)
+
+
+def undo_patches():
+    for klass in _mailhost_classes:
         undoMonkeyPatch(klass, PrintingMailHost)
