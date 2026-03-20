@@ -46,7 +46,8 @@ class TestIntegration(unittest.TestCase):
         Patch.FIXED_ADDRESS = ["another@example.org"]
         try:
             with self.assertLogs("PrintingMailHost", level="INFO") as logs:
-                self.send()
+                with self.assertRaises(ConnectionRefusedError):
+                    self.send()
                 self.assertEqual(len(logs.output), 2)
                 output = logs.output[0]
                 self.assertIn("From: me@example.org", output)

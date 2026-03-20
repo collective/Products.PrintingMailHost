@@ -70,8 +70,31 @@ class PrintingMailHost:
 
     security.declarePrivate("_send")
 
-    def _send(self, mfrom, mto, messageText, debug=False, immediate=False):
-        """Send the message."""
+    def _send(self, mfrom, mto, messageText, immediate=False, debug=False):
+        """Send the message.
+
+        The various definitions of _send in Plone (mostly tests) are all:
+
+            def _send(self, mfrom, mto, messageText, immediate=False)
+
+        except in collective.MockMailHost, which has:
+
+            def _send(self, mfrom, mto, messageText, debug=False):
+
+        and it actually ignores the 'debug' keyword argument.
+
+        Originally we had as order: `debug=False, immediate=False`.
+        But `Products/MailHost/MailHost.py` does not use keyword arguments,
+        but calls:
+
+            self._send(mfrom, mto, msg, immediate)
+
+        With our original order this meant that only our debug argument was
+        affected by the last value that got passed, and immediate was always
+        False.  So I switched this around.  The effect can be seen in
+        test_fixed_address, where a ConnectionRefusedError should be raise
+        when we send immediately.
+        """
         orig_messageText = messageText
         if isinstance(messageText, bytes):
             messageText = message_from_bytes(messageText)
@@ -112,10 +135,13 @@ class PrintingMailHost:
             orig_send = getattr(self, PATCH_PREFIX + "_send", None)
             if orig_send is not None:
                 LOG.info("Sending actual email to %s", FIXED_ADDRESS)
-                # We do not pass the 'debug' and 'immediate' keyword
-                # arguments, because not all implementations accept
-                # both keyword arguments.
-                orig_send(mfrom, FIXED_ADDRESS, orig_messageText)
+                try:
+                    orig_send(
+                        mfrom, FIXED_ADDRESS, orig_messageText, immediate=immediate
+                    )
+                except TypeError:
+                    # Not all implementations accept the 'immediate' keyword argument.
+                    orig_send(mfrom, FIXED_ADDRESS, orig_messageText)
 
 
 warning = """
