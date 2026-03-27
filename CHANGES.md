@@ -9,6 +9,27 @@
 
 <!-- towncrier release notes start -->
 
+## 2.1.0 (2026-03-27)
+
+
+### New features
+
+- Add functions `apply_patches` and `undo_patches`.
+  `apply_patches` is called at Zope startup.
+  @mauritsvanrees 
+
+
+### Bug fixes
+
+- Sending to a fixed address will happen immediately, if asked.  @mauritsvanrees 
+
+
+### Tests
+
+- Add tests.
+  Use the new `apply_patches` and `undo_patches`  to help in these tests, without the patches bleeding over into other tests.
+  @mauritsvanrees 
+
 ## 2.0.1 (2025-12-23)
 
 
