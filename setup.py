@@ -3,7 +3,7 @@ from setuptools import setup
 
 long_description = Path("README.md").read_text() + "\n" + Path("CHANGES.md").read_text()
 
-version = "2.1.0"
+version = "2.1.1.dev0"
 
 setup(
     name="Products.PrintingMailHost",
